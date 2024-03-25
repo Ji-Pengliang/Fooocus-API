@@ -1,7 +1,12 @@
 import threading
 import re
 from modules.patch import PatchSettings, patch_settings, patch_all
-
+import ipdb
+import pickle
+from PIL import Image
+from pathlib import Path
+from tqdm import tqdm
+import copy
 patch_all()
 
 class AsyncTask:
@@ -124,6 +129,39 @@ def worker():
         async_task.results = async_task.results + [wall]
         return
 
+    def generate_centered_mask(H, W):
+        mask = np.zeros((H, W, 3), dtype=np.uint8)
+        
+        central_width = W // 3
+        central_height = H // 2
+        
+        start_x = (W - central_width) // 2
+        start_y = (H - central_height) // 2
+        
+        mask[start_y:start_y+central_height, start_x:start_x+central_width] = 255
+        
+        return mask
+
+    def set_tasks():
+        base_dir = Path('/project_data/ramanan/pengliaj/dataset/KITTI/test')
+        png_files = []
+        for file_path in base_dir.rglob('*/data/*.png'):
+            png_files.append(file_path)
+        png_file_paths = [str(file) for file in png_files]
+        
+        genearted_args = []
+        with open('/project_data/ramanan/pengliaj/Fooocus/task_template.pkl', 'rb') as file: 
+            arg_template = pickle.load(file)
+        for i, img_path in enumerate(png_file_paths):
+            arg = copy.deepcopy(arg_template)
+            img = np.array(Image.open(img_path), dtype=np.uint8)
+            arg[35]['image'] = img
+            arg[35]['mask'] = generate_centered_mask(img.shape[0], img.shape[1])
+            output_path = img_path.replace('/data/', '/data_impainting/')
+            arg.insert(1, output_path)
+            genearted_args.append(arg)
+        return [AsyncTask(arg) for arg in genearted_args]
+        
     @torch.no_grad()
     @torch.inference_mode()
     def handler(async_task):
@@ -132,7 +170,8 @@ def worker():
 
         args = async_task.args
         args.reverse()
-
+        
+        output_path = args.pop()
         prompt = args.pop()
         negative_prompt = args.pop()
         style_selections = args.pop()
@@ -886,7 +925,7 @@ def worker():
                                                  steps, base_model_name, refiner_model_name, loras)
                     d.append(('Metadata Scheme', 'metadata_scheme', metadata_scheme.value if save_metadata_to_images else save_metadata_to_images))
                     d.append(('Version', 'version', 'Fooocus v' + fooocus_version.version))
-                    img_paths.append(log(x, d, metadata_parser, output_format))
+                    img_paths.append(log(x, d, metadata_parser, output_format, output_path))
 
                 yield_result(async_task, img_paths, do_not_show_finished_images=len(tasks) == 1 or disable_intermediate_results)
             except ldm_patched.modules.model_management.InterruptProcessingException as e:
@@ -901,11 +940,13 @@ def worker():
             execution_time = time.perf_counter() - execution_start_time
             print(f'Generating and saving time: {execution_time:.2f} seconds')
         async_task.processing = False
-        return
+        return x
 
     while True:
         time.sleep(0.01)
-        if len(async_tasks) > 0:
+        async_tasks = set_tasks()
+        cnt = 0
+        while async_tasks:
             task = async_tasks.pop(0)
             generate_image_grid = task.args.pop(0)
 
@@ -915,13 +956,17 @@ def worker():
                     build_image_wall(task)
                 task.yields.append(['finish', task.results])
                 pipeline.prepare_text_encoder(async_call=True)
+                # ipdb.set_trace()
             except:
                 traceback.print_exc()
                 task.yields.append(['finish', task.results])
             finally:
                 if pid in modules.patch.patch_settings:
                     del modules.patch.patch_settings[pid]
+            print(cnt)
+            cnt += 1
+        break
     pass
 
 
-threading.Thread(target=worker, daemon=True).start()
+# threading.Thread(target=worker, daemon=True).start()

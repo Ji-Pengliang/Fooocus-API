@@ -6,11 +6,35 @@ import args_manager
 import tempfile
 import modules.flags
 import modules.sdxl_styles
-
+import ipdb
 from modules.model_loader import load_file_from_url
-from modules.util import get_files_from_folder, makedirs_with_log
 from modules.flags import OutputFormat, Performance, MetadataScheme
+# from modules.util import get_files_from_folder, makedirs_with_log
+from modules.sdxl_styles import legal_style_names
 
+def makedirs_with_log(path):
+    try:
+        os.makedirs(path, exist_ok=True)
+    except OSError as error:
+        print(f'Directory {path} could not be created, reason: {error}')
+
+def get_files_from_folder(folder_path, extensions=None, name_filter=None):
+    if not os.path.isdir(folder_path):
+        raise ValueError("Folder path is not a valid directory.")
+
+    filenames = []
+
+    for root, dirs, files in os.walk(folder_path, topdown=False):
+        relative_path = os.path.relpath(root, folder_path)
+        if relative_path == ".":
+            relative_path = ""
+        for filename in sorted(files, key=lambda s: s.casefold()):
+            _, file_extension = os.path.splitext(filename)
+            if (extensions is None or file_extension.lower() in extensions) and (name_filter is None or name_filter in _):
+                path = os.path.join(relative_path, filename)
+                filenames.append(path)
+
+    return filenames
 
 def get_config_path(key, default_value):
     env = os.getenv(key)
@@ -353,7 +377,7 @@ default_styles = get_config_item_or_set_default(
         "Fooocus Enhance",
         "Fooocus Sharp"
     ],
-    validator=lambda x: isinstance(x, list) and all(y in modules.sdxl_styles.legal_style_names for y in x)
+    validator=lambda x: isinstance(x, list) and all(y in legal_style_names for y in x)
 )
 default_prompt_negative = get_config_item_or_set_default(
     key='default_prompt_negative',

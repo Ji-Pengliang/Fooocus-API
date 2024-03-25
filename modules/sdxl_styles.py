@@ -2,14 +2,32 @@ import os
 import re
 import json
 import math
-import modules.config
+import ipdb
+# from modules.util import get_files_from_folder
+# import modules.config
 
-from modules.util import get_files_from_folder
 
 # cannot use modules.config - validators causing circular imports
 styles_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../sdxl_styles/'))
 wildcards_max_bfs_depth = 64
 
+def get_files_from_folder(folder_path, extensions=None, name_filter=None):
+    if not os.path.isdir(folder_path):
+        raise ValueError("Folder path is not a valid directory.")
+
+    filenames = []
+
+    for root, dirs, files in os.walk(folder_path, topdown=False):
+        relative_path = os.path.relpath(root, folder_path)
+        if relative_path == ".":
+            relative_path = ""
+        for filename in sorted(files, key=lambda s: s.casefold()):
+            _, file_extension = os.path.splitext(filename)
+            if (extensions is None or file_extension.lower() in extensions) and (name_filter is None or name_filter in _):
+                path = os.path.join(relative_path, filename)
+                filenames.append(path)
+
+    return filenames
 
 def normalize_key(k):
     k = k.replace('-', ' ')
@@ -52,6 +70,7 @@ for styles_file in styles_files:
 style_keys = list(styles.keys())
 fooocus_expansion = "Fooocus V2"
 legal_style_names = [fooocus_expansion] + style_keys
+# ipdb.set_trace()
 
 
 def apply_style(style, positive):

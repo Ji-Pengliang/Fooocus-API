@@ -9,7 +9,6 @@ import modules.anisotropic as anisotropic
 import ldm_patched.ldm.modules.attention
 import ldm_patched.k_diffusion.sampling
 import ldm_patched.modules.sd1_clip
-import modules.inpaint_worker as inpaint_worker
 import ldm_patched.ldm.modules.diffusionmodules.openaimodel
 import ldm_patched.ldm.modules.diffusionmodules.model
 import ldm_patched.modules.sd
@@ -26,6 +25,7 @@ from ldm_patched.k_diffusion.sampling import BatchedBrownianTree
 from ldm_patched.ldm.modules.diffusionmodules.openaimodel import forward_timestep_embed, apply_control
 from modules.patch_precision import patch_all_precision
 from modules.patch_clip import patch_all_clip
+import modules.inpaint_worker as inpaint_worker
 
 
 class PatchSettings:

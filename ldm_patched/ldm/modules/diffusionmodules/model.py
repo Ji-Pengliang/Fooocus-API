@@ -5,7 +5,7 @@ import torch.nn as nn
 import numpy as np
 from einops import rearrange
 from typing import Optional, Any
-
+import ipdb
 from ldm_patched.modules import model_management
 import ldm_patched.modules.ops
 ops = ldm_patched.modules.ops.disable_weight_init
