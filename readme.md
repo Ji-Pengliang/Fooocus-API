@@ -1,8 +1,8 @@
-![](./example/0.png)
+# Fooocus Inpainting Interface
 
 Welcome to the Fooocus Inpainting Interface, featuring the cutting-edge Fooocus generative model designed for image inpainting. This interface simplifies the process of integrating human figures into images, offering a straightforward function-based approach for users.
 
-# Fooocus Inpainting Interface
+![](./example/0.png)
 
 ### Getting Started
 
