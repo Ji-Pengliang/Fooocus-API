@@ -56,26 +56,6 @@ Tailor the inpainting process to your needs by modifying the task template:
        pickle.dump(arg_template, file)
    ```
 
-### Some results
-
-To give you a clearer idea of the transformation possible with the Fooocus Inpainting Interface, below are examples showcasing the original images alongside their inpainted counterparts. This comparison highlights the interface's ability to seamlessly integrate human figures into existing scenes, enhancing the overall composition and realism of the images.
-
-#### Original Image vs. After Inpainting:
-
-##### Original Image
-
-![](./example/1.png)
-
-##### After Inpainting![](./example/1_inpainting.png)
-
-##### Original Image![](./example/2.png)
-
-##### After Inpainting![](./example/2_inpainting.png)
-
-##### Original Image![](./example/3.png)
-
-##### After Inpainting![](./example/3_inpainting.png)
-
 ### Batch Processing for Customized Datasets
 
 If you're looking to apply inpainting to your own dataset in batch mode, the process is straightforward:
@@ -141,7 +121,27 @@ To demonstrate batch processing with a practical example, we use the KITTI eigen
 
   This path indicates the structured storage of your inpainted images, allowing for easy access and review of the enhanced dataset.
 
+### More results
 
+To give you a clearer idea of the transformation possible with the Fooocus Inpainting Interface, below are examples showcasing the original images alongside their inpainted counterparts. This comparison highlights the interface's ability to seamlessly integrate human figures into existing scenes, enhancing the overall composition and realism of the images.
+
+#### Original Image vs. After Inpainting:
+
+##### Original Image
+
+![](./example/1.png)
+
+##### After Inpainting![](./example/1_inpainting.png)
+
+##### Original Image![](./example/2.png)
+
+##### After Inpainting![](./example/2_inpainting.png)
+
+##### Original Image![](./example/3.png)
+
+##### After Inpainting![](./example/3_inpainting.png)
+
+### 
 
 
 By following these steps, you can efficiently process batches of images from your dataset, utilizing the advanced capabilities of the Fooocus Inpainting Interface to enhance and modify your images. Happy Inpainting! 
