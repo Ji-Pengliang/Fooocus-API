@@ -1,6 +1,8 @@
-# Fooocus Inpainting Interface
+![](./example/0.png)
 
 Welcome to the Fooocus Inpainting Interface, featuring the cutting-edge Fooocus generative model designed for image inpainting. This interface simplifies the process of integrating human figures into images, offering a straightforward function-based approach for users.
+
+# Fooocus Inpainting Interface
 
 ### Getting Started
 
@@ -54,20 +56,6 @@ Tailor the inpainting process to your needs by modifying the task template:
        pickle.dump(arg_template, file)
    ```
 
-### Batch Processing for Customized Datasets
-
-If you're looking to apply inpainting to your own dataset in batch mode, the process is straightforward:
-
-1. **Configure Your Dataset Directory**: In the `set_tasks` function, replace `base_dir` with the path to your dataset directory. This small change gears the Fooocus Inpainting Interface towards processing your dataset.
-
-2. **Important Note for Batch Processing**: To ensure smooth batch processing, please comment out or remove the following line from your code:
-
-   ```
-   threading.Thread(target=worker, daemon=True).start()
-   ```
-
-   This is crucial as the line can introduce threading issues during non-batch operations.
-
 ### Some results
 
 To give you a clearer idea of the transformation possible with the Fooocus Inpainting Interface, below are examples showcasing the original images alongside their inpainted counterparts. This comparison highlights the interface's ability to seamlessly integrate human figures into existing scenes, enhancing the overall composition and realism of the images.
@@ -87,6 +75,20 @@ To give you a clearer idea of the transformation possible with the Fooocus Inpai
 ##### Original Image![](./example/3.png)
 
 ##### After Inpainting![](./example/3_inpainting.png)
+
+### Batch Processing for Customized Datasets
+
+If you're looking to apply inpainting to your own dataset in batch mode, the process is straightforward:
+
+1. **Configure Your Dataset Directory**: In the `set_tasks` function, replace `base_dir` with the path to your dataset directory. This small change gears the Fooocus Inpainting Interface towards processing your dataset.
+
+2. **Important Note for Batch Processing**: To ensure smooth batch processing, please comment out or remove the following line from your code:
+
+   ```
+   threading.Thread(target=worker, daemon=True).start()
+   ```
+
+   This is crucial as the line can introduce threading issues during non-batch operations.
 
 ### Example with KITTI Eigen-Split Evaluation Dataset
 
