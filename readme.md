@@ -32,6 +32,8 @@ img_inpainting = Image.fromarray(img_inpainting)
 img_inpainting.save('./img_inpainting.png')
 ```
 
+You can adjust the size of the generated elements in your images by modifying the mask size used in the inpainting process.
+
 ### Customizing Your Inpainting Prompts
 
 Tailor the inpainting process to your needs by modifying the task template:
@@ -65,6 +67,26 @@ If you're looking to apply inpainting to your own dataset in batch mode, the pro
    ```
 
    This is crucial as the line can introduce threading issues during non-batch operations.
+
+### Some results
+
+To give you a clearer idea of the transformation possible with the Fooocus Inpainting Interface, below are examples showcasing the original images alongside their inpainted counterparts. This comparison highlights the interface's ability to seamlessly integrate human figures into existing scenes, enhancing the overall composition and realism of the images.
+
+#### Original Image vs. After Inpainting:
+
+##### Original Image
+
+![](./example/1.png)
+
+##### After Inpainting![](./example/1_inpainting.png)
+
+##### Original Image![](./example/2.png)
+
+##### After Inpainting![](./example/2_inpainting.png)
+
+##### Original Image![](./example/3.png)
+
+##### After Inpainting![](./example/3_inpainting.png)
 
 ### Example with KITTI Eigen-Split Evaluation Dataset
 
@@ -107,7 +129,7 @@ To demonstrate batch processing with a practical example, we use the KITTI eigen
 
   This connects to port 7865 ("http://127.0.0.1:7865/"). You may ignore any browser windows that open and await the results from your server.
 
-- Accessing the Results
+- ##### Accessing the Results
 
   After the process completes, you'll find the inpainting results in the `inpainting` directory located within the same `root_dir` as your datasets. For example, the results for a specific dataset might be found at:
 
@@ -117,6 +139,7 @@ To demonstrate batch processing with a practical example, we use the KITTI eigen
 
   This path indicates the structured storage of your inpainted images, allowing for easy access and review of the enhanced dataset.
 
-  
+
+
 
 By following these steps, you can efficiently process batches of images from your dataset, utilizing the advanced capabilities of the Fooocus Inpainting Interface to enhance and modify your images. Happy Inpainting! 
