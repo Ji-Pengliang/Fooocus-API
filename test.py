@@ -2,6 +2,6 @@ import ipdb
 import numpy as np
 import pickle
 
-with open('/project_data/ramanan/pengliaj/Fooocus/task_template.pkl', 'rb') as file:
+with open('./task_template.pkl', 'rb') as file:
     arg_template = pickle.load(file)
 ipdb.set_trace()

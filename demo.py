@@ -897,7 +897,7 @@ def generate_centered_mask(H, W):
     return mask
 
 def generate_from_template(img, mask=None):
-    with open('/project_data/ramanan/pengliaj/Fooocus/task_template.pkl', 'rb') as file: 
+    with open('./task_template.pkl', 'rb') as file: 
         arg = pickle.load(file)
     arg[35]['image'] = img
     arg[35]['mask'] = mask if mask else generate_centered_mask(img.shape[0], img.shape[1]) 

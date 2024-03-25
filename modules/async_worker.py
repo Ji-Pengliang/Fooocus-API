@@ -143,14 +143,14 @@ def worker():
         return mask
 
     def set_tasks():
-        base_dir = Path('/project_data/ramanan/pengliaj/dataset/KITTI/test')
+        base_dir = Path('../dataset/KITTI/test')
         png_files = []
         for file_path in base_dir.rglob('*/data/*.png'):
             png_files.append(file_path)
         png_file_paths = [str(file) for file in png_files]
         
         genearted_args = []
-        with open('/project_data/ramanan/pengliaj/Fooocus/task_template.pkl', 'rb') as file: 
+        with open('./task_template.pkl', 'rb') as file: 
             arg_template = pickle.load(file)
         for i, img_path in enumerate(png_file_paths):
             arg = copy.deepcopy(arg_template)
